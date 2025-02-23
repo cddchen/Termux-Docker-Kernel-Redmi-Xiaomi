@@ -17,6 +17,11 @@ jobs:
       - run: ln -fs /usr/share/zoneinfo/Asia/Kolkata /etc/localtime && date
       - run: apt install -f -y git bison flex libxml2 libssl-dev bc zip default-jre python3 python3-pip wget curl cpio bash python2
       - run: bash build.sh
+      - name: Cache
+        uses: actions/cache@v3.4.2
+        with:
+          path: './out'
+          
     env:
         token: ${{ secrets.TOKEN }}
         chat_id: ${{ secrets.CHAT_ID }}
