@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ rebase ]
+    branches: [ main ]
   workflow_dispatch:
 jobs:
   node-docker:
@@ -17,10 +17,13 @@ jobs:
       - run: ln -fs /usr/share/zoneinfo/Asia/Kolkata /etc/localtime && date
       - run: apt install -f -y git bison flex libxml2 libssl-dev bc zip default-jre python3 python3-pip wget curl cpio bash python2
       - run: bash build.sh
-      - name: Cache
-        uses: actions/cache@v3.4.2
+      - name: Cache build output
+        uses: actions/cache@v3
         with:
-          path: './out'
+          path: ./out
+          key: build-${{ github.run_id }}
+          restore-keys: |
+            build-
           
     env:
         token: ${{ secrets.TOKEN }}
